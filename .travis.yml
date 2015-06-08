@@ -1,0 +1,3 @@
+language: English
+script:
+ - bash -e ./test.bash
