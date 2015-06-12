@@ -1,0 +1,44 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    echo "ERROR: ２つの引数から最大公約数を求めます。２つの引数を入力してください"
+    exit 1
+fi
+
+IsNumeric(){
+    expr "$1" + 1 >/dev/null 2>&1
+    if [ "$?" -ge 2 ]; then
+        echo "ERROR:'$1'は整数でありません。引数には整数を入力してください。"
+        exit 1
+    fi
+}
+
+IsNumeric "$1"
+IsNumeric "$2"
+
+GCD(){
+#ユークリッドの互除法を使った。アルゴリズムは以下のサイトを参考にした。
+#http://ton-up.net/blog/archives/99
+    if [ $1 -gt  $2 ]; then
+        a="$1"
+        b="$2"
+    else
+        b="$1"
+        a="$2"
+    fi
+
+    if [ $b -eq 0 ]; then
+        echo "最大公約数は求められません。0以外の数値を入力してください"
+    else
+    while [ $b -ne 0 ];
+    do
+        r=$((a % b))
+        a=$b
+        b=$r
+    done
+
+        echo $a #$aには最終的にbが代入されている。
+    fi
+}
+
+GCD "$1" "$2"
